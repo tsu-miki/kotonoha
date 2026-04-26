@@ -1,6 +1,8 @@
-# kotonoha_mobile
+# app（kotonoha_mobile）
 
-Flutter製のモバイルアプリ。現状は最小構成（`kotonoha` というタイトルを中央に表示するだけ）。
+Flutter製のモバイルアプリ本体。現状は最小構成（`kotonoha` というタイトルを中央に表示するだけ）。
+
+ワークスペース全体の説明は `../CLAUDE.md` を参照。E2Eテストは隣の `../e2e/` で別プロジェクトとして管理されている。
 
 ## よく使うコマンド
 
@@ -31,7 +33,7 @@ flutter doctor -v
 ## ディレクトリ構成
 
 - `lib/` — アプリ本体のDartソース。エントリポイントは `lib/main.dart`。
-- `test/` — `flutter_test` を使ったウィジェット/ユニットテスト。
+- `test/` — `flutter_test` を使ったウィジェット/ユニットテスト。E2E（integration_test）は `../e2e/` 側に置く。
 - `android/`, `ios/`, `macos/`, `linux/`, `windows/`, `web/` — 各プラットフォームの生成済みネイティブプロジェクト。原則として手で触らない（プラグイン追加や権限変更時のみ編集）。
 - `pubspec.yaml` — 依存関係・アセット・フォント設定。
 - `analysis_options.yaml` — `package:flutter_lints/flutter.yaml` をベースにしたlint設定。
