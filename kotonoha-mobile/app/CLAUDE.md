@@ -53,7 +53,15 @@ flutter doctor -v
 2. `flutter test` — 全テストpass
 3. UI変更がある場合は `flutter run` で実機/シミュレータで目視確認
 
+## Android署名
+
+`android/app/build.gradle.kts` の release署名は `android/key.properties` を読む。
+
+- `key.properties` と `.jks` ファイルは `.gitignore` 対象でコミットしない。
+- ローカルで release build したいときだけ手元で `key.properties` を作る（`storeFile`, `storePassword`, `keyAlias`, `keyPassword` の4キー）。なければdebug署名で動く。
+- CIでは Codemagic が `codemagic.yaml` の `Set up keystore` ステップで `key.properties` と keystore を環境変数から自動生成するので、手作業不要。
+
 ## メモ
 
-- アプリ名・パッケージ名は `kotonoha_mobile`（pubspec.yaml）。
-- バージョンは `pubspec.yaml` の `version:` で管理（`1.0.0+1` 形式 = `<semver>+<buildNumber>`）。
+- pubspec.yaml の `name: kotonoha_mobile` はDartパッケージ名。AndroidのapplicationId/namespaceは `io.github.tsumiki.kotonoha`（`android/app/build.gradle.kts`）。別物。
+- バージョンは `pubspec.yaml` の `version:` で管理（`1.0.0+1` 形式 = `<semver>+<buildNumber>`）。`+` の右側がAndroidの `versionCode`、左側が `versionName`。Firebase App Distributionで同じビルド番号は再アップロード不可なので、CIで配信するたびに `+N` を上げる必要がある。

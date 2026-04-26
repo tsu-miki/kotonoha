@@ -37,7 +37,11 @@ group('KotonohaApp', () {
 });
 ```
 
+## CI/CD
+
+リポジトリ直下の `../codemagic.yaml` でCodemagicのビルドが定義されている。`main` への push をトリガーに `app/` の Android APK をビルドし、Firebase App Distribution の `testers` グループに配信する。詳細は `../CLAUDE.md` を参照。
+
 ## メモ
 
-- リポジトリ名（外側のディレクトリ）は `kotonoha`、ワークスペースは `kotonoha-mobile`、Flutterパッケージ名は `kotonoha_mobile`。混同しないこと。
+- リポジトリ名（外側のディレクトリ）は `kotonoha`、ワークスペースは `kotonoha-mobile`、Flutterパッケージ名は `kotonoha_mobile`、AndroidのapplicationIdは `io.github.tsumiki.kotonoha`。それぞれ別物なので混同しないこと。
 - `app/` 側のpublic API（クラス名・シンボル）を変更すると `e2e/` のテストが壊れる。両方を見て更新する。

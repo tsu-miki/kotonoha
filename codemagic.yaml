@@ -1,0 +1,41 @@
+workflows:
+  android-firebase-distribution:
+    name: Android - Firebase App Distribution
+    instance_type: linux_x2
+    max_build_duration: 60
+    working_directory: kotonoha-mobile/app
+    environment:
+      flutter: stable
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+    scripts:
+      - name: Set up keystore
+        script: |
+          echo "$CM_KEYSTORE" | base64 --decode > /tmp/keystore.jks
+          cat > android/key.properties <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=/tmp/keystore.jks
+          EOF
+      - name: Get Flutter packages
+        script: flutter pub get
+      - name: Flutter analyze
+        script: flutter analyze
+      - name: Flutter test
+        script: flutter test
+      - name: Build APK
+        script: flutter build apk --release
+    artifacts:
+      - kotonoha-mobile/app/build/app/outputs/flutter-apk/app-release.apk
+    publishing:
+      firebase:
+        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+        android:
+          app_id: $FIREBASE_ANDROID_APP_ID
+          groups:
+            - testers
