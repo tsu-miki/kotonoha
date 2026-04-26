@@ -5,10 +5,15 @@ import 'package:kotonoha_mobile/main.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('renders kotonoha title', (tester) async {
-    await tester.pumpWidget(const KotonohaApp());
-    await tester.pumpAndSettle();
+  group('KotonohaApp', () {
+    testWidgets('アプリを起動するとタイトル「kotonoha」が画面中央に表示される',
+        (tester) async {
+      // Given: アプリを起動して描画が安定するまで待つ
+      await tester.pumpWidget(const KotonohaApp());
+      await tester.pumpAndSettle();
 
-    expect(find.text('kotonoha'), findsOneWidget);
+      // Then: タイトル「kotonoha」が画面に1件表示されている
+      expect(find.text('kotonoha'), findsOneWidget);
+    });
   });
 }

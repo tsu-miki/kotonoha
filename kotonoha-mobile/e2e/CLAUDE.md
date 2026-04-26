@@ -33,6 +33,7 @@ flutter test integration_test/
 - ファイルは `integration_test/<feature>_test.dart` の規則で配置。
 - 各テストファイルの先頭で `IntegrationTestWidgetsFlutterBinding.ensureInitialized();` を呼ぶ。
 - アプリ側のWidgetは `package:kotonoha_mobile/...` から import する。
+- ケースは **BDDスタイル・日本語** で記述する（`group` でコンテキストをまとめ、ケース名は「〜すると、〜される」形式、本文は Given/When/Then で区切る）。詳細は `../CLAUDE.md` の「テスト記述ルール」を参照。
 
 ## メモ
 

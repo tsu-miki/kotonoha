@@ -33,7 +33,7 @@ flutter doctor -v
 ## ディレクトリ構成
 
 - `lib/` — アプリ本体のDartソース。エントリポイントは `lib/main.dart`。
-- `test/` — `flutter_test` を使ったウィジェット/ユニットテスト。E2E（integration_test）は `../e2e/` 側に置く。
+- `test/` — `flutter_test` を使ったウィジェット/ユニットテスト。E2E（integration_test）は `../e2e/` 側に置く。テストの書き方（BDD・日本語）は `../CLAUDE.md` の「テスト記述ルール」を参照。
 - `android/`, `ios/`, `macos/`, `linux/`, `windows/`, `web/` — 各プラットフォームの生成済みネイティブプロジェクト。原則として手で触らない（プラグイン追加や権限変更時のみ編集）。
 - `pubspec.yaml` — 依存関係・アセット・フォント設定。
 - `analysis_options.yaml` — `package:flutter_lints/flutter.yaml` をベースにしたlint設定。
