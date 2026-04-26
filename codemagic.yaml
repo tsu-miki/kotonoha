@@ -6,6 +6,8 @@ workflows:
     working_directory: kotonoha-mobile/app
     environment:
       flutter: stable
+      groups:
+        - firebase_credentials
     triggering:
       events:
         - push

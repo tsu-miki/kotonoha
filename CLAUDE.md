@@ -13,18 +13,20 @@
 
 1. 環境変数からkeystoreを復号して `kotonoha-mobile/app/android/key.properties` を生成
 2. `flutter pub get` → `flutter analyze` → `flutter test` → `flutter build apk --release`
-3. 成果物 (`app-release.apk`) を Firebase App Distribution の `testers` グループへ配信
+3. `publishing.firebase` ブロックでAPKを Firebase App Distribution の `testers` グループへ配信
 
-### 必要な環境変数（Codemagic UI で Secret 登録、リポジトリには持ち込まない）
+### 必要な環境変数（すべて Codemagic Application → Environment variables、Secret登録、リポジトリには持ち込まない）
 
-| 変数名 | 用途 |
-|---|---|
-| `CM_KEYSTORE` | base64エンコードした署名用 `.jks` |
-| `CM_KEYSTORE_PASSWORD` | keystoreパスワード |
-| `CM_KEY_PASSWORD` | エイリアスの鍵パスワード |
-| `CM_KEY_ALIAS` | 鍵エイリアス名（`kotonoha`） |
-| `FIREBASE_SERVICE_ACCOUNT` | サービスアカウントJSONの中身全体 |
-| `FIREBASE_ANDROID_APP_ID` | Firebase App ID（`1:xxx:android:xxx`） |
+| 変数名 | Variable group | 用途 |
+|---|---|---|
+| `CM_KEYSTORE` | （なし） | base64エンコードした署名用 `.jks` |
+| `CM_KEYSTORE_PASSWORD` | （なし） | keystoreパスワード |
+| `CM_KEY_PASSWORD` | （なし） | エイリアスの鍵パスワード |
+| `CM_KEY_ALIAS` | （なし） | 鍵エイリアス名（`kotonoha`） |
+| `FIREBASE_SERVICE_ACCOUNT` | `firebase_credentials` | サービスアカウントJSONの中身全体 |
+| `FIREBASE_ANDROID_APP_ID` | `firebase_credentials` | Firebase App ID（`1:xxx:android:xxx`） |
+
+Firebase関連2つを `firebase_credentials` グループに入れているのはCodemagicの仕様で、`publishing.firebase` ブロックの環境変数は **Variable group経由でしか渡せない**（スクリプト内なら `$VAR` で直接参照可能だが、`publishing:` 等の宣言的セクションは不可）。`codemagic.yaml` 側で `environment.groups: [firebase_credentials]` と参照している。keystore系は `scripts:` でしか使わないのでグループ不要。
 
 ### Firebase / Android 関連の事実（変えると配信が壊れる）
 
